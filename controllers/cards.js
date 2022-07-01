@@ -13,7 +13,7 @@ module.exports.createCard = (req, res) => {
     .then((card) => res.send({ data: card }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(400).send({ message: 'Введены некорректные данные для пользователя' });
+        res.status(400).send({ message: 'Введены некорректные данные для карточки' });
         return;
       }
       res.status(500).send({ message: err.message });
@@ -27,9 +27,19 @@ module.exports.deleteCard = (req, res) => {
 };
 
 module.exports.likeCard = (req, res) => {
-  Card.findByIdAndUpdate(req.params.cardId, { $addToSet: { likes: req.user._id } }, { new: true })
+  Card.findByIdAndUpdate(
+    req.params.cardId,
+    { $addToSet: { likes: req.user._id } },
+    { new: true, runValidators: true },
+  )
     .then((card) => res.send({ data: card }))
-    .catch((err) => res.status(500).send({ message: err.message }));
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: 'Поле Id заданно некорректно' });
+        return;
+      }
+      res.status(500).send({ message: err.message });
+    });
 };
 
 module.exports.dislikeCard = (req, res) => {
