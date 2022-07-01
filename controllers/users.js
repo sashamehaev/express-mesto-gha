@@ -48,7 +48,7 @@ module.exports.updateUser = (req, res) => {
         res.status(400).send({ message: 'Введены некорректные данные для пользователя' });
         return;
       }
-      res.status(500).send({ message: err.message })
+      res.status(500).send({ message: err.message });
     });
 };
 
