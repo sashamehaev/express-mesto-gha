@@ -32,7 +32,13 @@ module.exports.likeCard = (req, res) => {
     { $addToSet: { likes: req.user._id } },
     { new: true, runValidators: true },
   )
-    .then((card) => res.send({ data: card }))
+    .then((card) => {
+      if (!card) {
+        res.status(404).send({ message: 'Карточка не найдена' });
+        return;
+      }
+      res.send({ data: card });
+    })
     .catch((err) => {
       if (err.name === 'CastError') {
         res.status(400).send({ message: 'Поле Id заданно некорректно' });
