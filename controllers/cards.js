@@ -21,13 +21,21 @@ module.exports.createCard = (req, res) => {
 };
 
 module.exports.deleteCard = (req, res) => {
-  Card.findByIdAndDelete(req.params.cardId)
+  Card.findById(req.params.cardId)
     .then((card) => {
       if (!card) {
-        res.status(404).send({ message: 'Карточка не найдена' });
-        return;
+        throw new Error('Карточка не найдена');
       }
-      res.send({ data: card });
+
+      if (card.owner !== req.user._id) {
+        throw new Error('Можно удалять только свои карточки');
+      }
+    })
+    .then(() => {
+      Card.findByIdAndRemove(req.params.cardId)
+        .then((card) => {
+          res.send({ data: card });
+        });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
