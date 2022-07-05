@@ -25,6 +25,10 @@ app.use((req, res) => {
   res.status(404).send({ message: 'Страницы не существует' });
 });
 
+app.use((err, req, res, next) => {
+  res.status(err.statusCode).send({ message: err.message });
+});
+
 app.listen(PORT, () => {
 
 });
