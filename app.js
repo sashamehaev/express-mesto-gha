@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const { celebrate, Joi, errors } = require('celebrate');
 const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
+const { urlValidator } = require('./utils/urlValidator');
 
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
@@ -26,7 +27,7 @@ app.post('/signup', celebrate({
     password: Joi.string().required(),
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().url(),
+    avatar: Joi.string().custom(urlValidator),
   }),
 }), createUser);
 
