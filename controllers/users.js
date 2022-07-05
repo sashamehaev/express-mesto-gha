@@ -17,7 +17,7 @@ module.exports.getCurrentUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Пользователь не найден');
       }
-      res.send({ data: user });
+      res.status(200).send({ data: user });
     })
     .catch((err) => {
       next(err);
@@ -106,7 +106,7 @@ module.exports.login = (req, res, next) => {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
         sameSite: true,
-      }).status(200).send(token);
+      }).status(200).send({ token });
     })
     .catch((err) => {
       next(err);
