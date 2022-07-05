@@ -7,6 +7,7 @@ const {
   updateAvatar,
   getCurrentUser,
 } = require('../controllers/users');
+const { urlValidator } = require('../utils/urlValidator');
 
 router.get('/', getUsers);
 router.get('/me', getCurrentUser);
@@ -22,6 +23,10 @@ router.patch('/me', celebrate({
     avatar: Joi.string(),
   }),
 }), updateUser);
-router.patch('/me/avatar', updateAvatar);
+router.patch('/me/avatar', celebrate({
+  body: Joi.object().keys({
+    avatar: Joi.string().require().custom(urlValidator),
+  }),
+}), updateAvatar);
 
 module.exports = router;

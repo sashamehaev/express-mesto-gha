@@ -7,12 +7,13 @@ const {
   likeCard,
   dislikeCard,
 } = require('../controllers/cards');
+const { urlValidator } = require('../utils/urlValidator');
 
 router.get('/', getCards);
 router.post('/', celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required(),
+    link: Joi.string().required().custom(urlValidator),
   }),
 }), createCard);
 router.delete('/:cardId', celebrate({
