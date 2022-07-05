@@ -29,12 +29,12 @@ module.exports.deleteCard = (req, res, next) => {
         throw new NotFoundError('Карточка не найдена');
       }
 
-      if (card.owner !== req.user._id) {
+      if (String(card.owner) !== req.user._id) {
         throw new UnAuthorizedError('Можно удалять только свои карточки');
       }
     })
     .then(() => {
-      Card.findByIdAndDelete(req.params.cardId)
+      Card.findByIdAndRemove(req.params.cardId)
         .then((card) => {
           res.status(200).send({ data: card });
         });
