@@ -106,7 +106,7 @@ module.exports.login = (req, res, next) => {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
         sameSite: true,
-      }).status(201).end();
+      }).status(200).send(token);
     })
     .catch((err) => {
       next(err);
