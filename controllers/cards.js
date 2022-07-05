@@ -1,7 +1,7 @@
 const Card = require('../models/card');
 const NotFoundError = require('../errors/not-found-err');
 const ValidationError = require('../errors/validation-err');
-const UnAuthorizedError = require('../errors/unauthorized-err');
+const ForbiddenError = require('../errors/forbidden-err');
 
 module.exports.getCards = (req, res) => {
   Card.find({})
@@ -30,7 +30,7 @@ module.exports.deleteCard = (req, res, next) => {
       }
 
       if (String(card.owner) !== req.user._id) {
-        throw new UnAuthorizedError('Можно удалять только свои карточки');
+        throw new ForbiddenError('Можно удалять только свои карточки');
       }
     })
     .then(() => {
