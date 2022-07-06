@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
 const { celebrate, Joi, errors } = require('celebrate');
 const { createUser, login } = require('./controllers/users');
@@ -9,12 +11,19 @@ const NotFoundError = require('./errors/not-found-err');
 
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+});
+
 const { PORT = 3000 } = process.env;
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(helmet());
+app.use(limiter);
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
