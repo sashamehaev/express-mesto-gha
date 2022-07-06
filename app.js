@@ -5,6 +5,7 @@ const { celebrate, Joi, errors } = require('celebrate');
 const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { urlValidator } = require('./utils/urlValidator');
+const NotFoundError = require('../errors/not-found-err');
 
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
@@ -36,8 +37,8 @@ app.use(auth);
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));
 
-app.use((req, res) => {
-  res.status(404).send({ message: 'Страницы не существует' });
+app.use((req, res, next) => {
+  next(new NotFoundError('Страницы по такому адресу не существует'));
 });
 
 app.use(errors());
