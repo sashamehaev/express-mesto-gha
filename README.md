@@ -1,6 +1,23 @@
 [![Tests](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-13-sprint.yml/badge.svg)](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-13-sprint.yml) [![Tests](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-14-sprint.yml)
 ## Бэкенд часть проекта Mesto.
 
+**Функциональность**
+* Проект Mesto - это социальная сеть для фотографов со всей России.
+* Вы можете загружать свои фотографии, смотреть фотографии других пользователей, ставить им лайки, а также редактировать свой профиль.
+
+**Стек технологий**
+* express.js
+* node.js
+* mongodb
+* ООП
+* vanilla js
+* Javascript
+* API
+* Webpack
+* Адаптивная верстка
+* БЭМ
+* HTML
+* CSS
 
 ## Настройка бейджей статуса тестов
 Перед началом работы над проектом рекомендуется исправить бейджи, отражающие статус прохождения тестов.
