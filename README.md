@@ -21,7 +21,7 @@
 * `npm run dev` — запускает сервер с hot-reload
 
 **Ссылка на репозиторий**
-https://github.com/sashamehaev/express-mesto-gha
+* https://github.com/sashamehaev/express-mesto-gha
 
 **Настройка бейджей статуса тестов**
 Перед началом работы над проектом рекомендуется исправить бейджи, отражающие статус прохождения тестов.
