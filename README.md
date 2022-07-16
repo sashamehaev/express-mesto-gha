@@ -32,5 +32,3 @@ https://github.com/sashamehaev/express-mesto-gha
 
 [![Tests for sprint 14](https://github.com/${sashamehaev}/${express-mesto-gha}/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/${sashamehaev}/${express-mesto-gha}/actions/workflows/tests-14-sprint.yml)
 ```
-
-
