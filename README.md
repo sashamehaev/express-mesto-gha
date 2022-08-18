@@ -1,32 +1,29 @@
-[![Tests](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-13-sprint.yml/badge.svg)](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-13-sprint.yml) [![Tests](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-14-sprint.yml)
-# Проект Mesto фронтенд + бэкенд
+## Бэкенд часть проекта Mesto.
 
+**Функциональность**
+* Можно записывать, читать или удалять карточки из бд, обновлять количество лайков для каждой конкретной карточки.
+* При регистрации, пользователь записывается в бд. Если мы хотим отредактировать профиль, происходит поиск по БД и последующие обновления.
+* Авторизация происходит после поиска пользователя в бд и при сравнении токена из его браузера с выданным для него ранее.
+* Проект структурирован благодаря разделению кода на роуты, контроллеры и модели.
 
+**Стек технологий**
+* Express.js
+* Mongoose
+* Mongodb
+* CRUD
+* Postman
+* Joi
+* Cookies
+* Регулярные выражения
+* Middlewares
+* Node.js
 
-## Настройка бейджей статуса тестов
-Перед началом работы над проектом рекомендуется исправить бейджи, отражающие статус прохождения тестов.
-Для этого замените разметку бейджей на следующий фрагмент, подставив вместо `${имя_пользователя}` и `${имя_репозитория}` соответствующие значения.
+**Директории**
+* `/routes` — папка с файлами роутера  
+* `/controllers` — папка с файлами контроллеров пользователя и карточки   
+* `/models` — папка с файлами описания схем пользователя и карточки  
 
-```
-[![Tests for sprint 13](https://github.com/${sashamehaev}/${express-mesto-gha}/actions/workflows/tests-13-sprint.yml/badge.svg)](https://github.com/${sashamehaev}/${express-mesto-gha}/actions/workflows/tests-13-sprint.yml) 
-
-[![Tests for sprint 14](https://github.com/${sashamehaev}/${express-mesto-gha}/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/${sashamehaev}/${express-mesto-gha}/actions/workflows/tests-14-sprint.yml)
-```
-
-
-## Директории
-
-`/routes` — папка с файлами роутера  
-`/controllers` — папка с файлами контроллеров пользователя и карточки   
-`/models` — папка с файлами описания схем пользователя и карточки  
-  
-Остальные директории вспомогательные, создаются при необходимости разработчиком
-
-## Запуск проекта
-
-`npm run start` — запускает сервер   
-`npm run dev` — запускает сервер с hot-reload
-
-## Ссылка на репозиторий
-
-https://github.com/sashamehaev/express-mesto-gha
+**Запуск проекта**
+* `npm install` — установите необходимые зависимости
+* `mongod` — запускает mongodb   
+* `npm run dev` — запускает сервер с hot-reload
