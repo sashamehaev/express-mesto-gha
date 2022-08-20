@@ -2,12 +2,11 @@ const Card = require('../models/card');
 const NotFoundError = require('../errors/not-found-err');
 const ValidationError = require('../errors/validation-err');
 const ForbiddenError = require('../errors/forbidden-err');
-const ServerError = require('../errors/server-err');
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
     .then((cards) => res.send({ data: cards }))
-    .catch(() => next(new ServerError('Произошла ошибка на сервере')));
+    .catch(next);
 };
 
 module.exports.createCard = (req, res, next) => {
@@ -17,9 +16,10 @@ module.exports.createCard = (req, res, next) => {
     .then((card) => res.status(201).send({ data: card }))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
-        return next(new ValidationError('Введены некорректные данные'));
+        next(new ValidationError('Введены некорректные данные'));
+        return;
       }
-      next(new ServerError('Произошла ошибка на сервере'));
+      next(err);
     });
 };
 
@@ -42,11 +42,10 @@ module.exports.deleteCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
-        return next(new ValidationError('Введены некорректные данные'));
-      } if(err.statusCode === 404 || err.statusCode === 403) {
-        return next(err);
+        next(new ValidationError('Введены некорректные данные'));
+        return;
       }
-      next(new ServerError('Произошла ошибка на сервере'));
+      next(err);
     });
 };
 
@@ -60,11 +59,10 @@ module.exports.likeCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
-        return next(new ValidationError('Введены некорректные данные'));
-      } if(err.statusCode === 404) {
-        return next(err);
+        next(new ValidationError('Введены некорректные данные'));
+        return;
       }
-      next(new ServerError('Произошла ошибка на сервере'));
+      next(err);
     });
 };
 
@@ -79,9 +77,8 @@ module.exports.dislikeCard = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new ValidationError('Введены некорректные данные'));
-      } if(err.statusCode === 404) {
-        return next(err);
+        return;
       }
-      next(new ServerError('Произошла ошибка на сервере'));
+      next(err);
     });
 };

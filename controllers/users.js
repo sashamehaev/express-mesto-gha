@@ -4,14 +4,13 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/not-found-err');
 const ValidationError = require('../errors/validation-err');
 const AuthError = require('../errors/auth-err');
-const ServerError = require('../errors/server-err');
 
 const { JWT_SECRET = 'some-secret-key' } = process.env;
 
-module.exports.getUsers = (req, res) => {
+module.exports.getUsers = (req, res, next) => {
   User.find({})
     .then((users) => res.send({ data: users }))
-    .catch(() => next(new ServerError('Произошла ошибка на сервере')));
+    .catch(next);
 };
 
 module.exports.getCurrentUser = (req, res, next) => {
@@ -22,12 +21,7 @@ module.exports.getCurrentUser = (req, res, next) => {
       }
       res.status(200).send({ data: user });
     })
-    .catch((err) => {
-      if(err.statusCode === 404) {
-        return next(err);
-      }
-      next(new ServerError('Произошла ошибка на сервере'));
-    });
+    .catch(next);
 };
 
 module.exports.getUserById = (req, res, next) => {
@@ -40,11 +34,10 @@ module.exports.getUserById = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
-        return next(new ValidationError('Введены некорректные данные'));
-      } if(err.statusCode === 404) {
-        return next(err);
+        next(new ValidationError('Введены некорректные данные'));
+        return;
       }
-      next(new ServerError('Произошла ошибка на сервере'));
+      next(err);
     });
 };
 
@@ -65,11 +58,13 @@ module.exports.createUser = (req, res, next) => {
     }))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
-        return next(new ValidationError('Введены некорректные данные'));
+        next(new ValidationError('Введены некорректные данные'));
+        return;
       } if (err.code === 11000) {
-        return next(new AuthError('Пользователь с таким email уже существует'));
+        next(new AuthError('Пользователь с таким email уже существует'));
+        return;
       }
-      next(new ServerError('Произошла ошибка на сервере'));
+      next(err);
     });
 };
 
@@ -80,9 +75,10 @@ module.exports.updateUser = (req, res, next) => {
     .then((user) => res.send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
-        return next(new ValidationError('Введены некорректные данные'));
+        next(new ValidationError('Введены некорректные данные'));
+        return;
       }
-      next(new ServerError('Произошла ошибка на сервере'));
+      next(err);
     });
 };
 
@@ -93,9 +89,10 @@ module.exports.updateAvatar = (req, res, next) => {
     .then((user) => res.send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
-        return next(new ValidationError('Введены некорректные данные'));
+        next(new ValidationError('Введены некорректные данные'));
+        return;
       }
-      next(new ServerError('Произошла ошибка на сервере'));
+      next(err);
     });
 };
 
@@ -117,9 +114,6 @@ module.exports.login = (req, res, next) => {
       }).status(200).send({ token });
     })
     .catch((err) => {
-      if(err.statusCode === 401) {
-        return next(err);
-      }
-      next(new ServerError('Произошла ошибка на сервере'));
+      next(err);
     });
 };
