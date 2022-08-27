@@ -10,6 +10,7 @@ const {
 const { urlValidator } = require('../utils/urlValidator');
 
 router.get('/users', getUsers);
+
 router.get('/users/me', getCurrentUser);
 
 router.get('/users/:userId', celebrate({
