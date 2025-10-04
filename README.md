@@ -10,12 +10,7 @@
 * Express.js
 * Mongoose
 * Mongodb
-* CRUD
-* Postman
 * Joi
-* Cookies
-* Регулярные выражения
-* Middlewares
 * Node.js
 
 **Директории**
